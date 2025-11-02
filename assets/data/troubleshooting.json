@@ -1,0 +1,27 @@
+[
+  {
+    "type": "video",
+    "title": "المشكلة: التطبيق لا يفتح",
+    "src": "/assets/videos/app-not-opening-1.mp4"
+  },
+  {
+    "type": "video",
+    "title": "إصلاح قاعدة البيانات",
+    "src": "/assets/videos/db-fix-1.mp4"
+  },
+  {
+    "type": "video",
+    "title": "video-01",
+    "src": "/assets/videos/video-01.mp4"
+  },
+  {
+    "type": "pdf",
+    "title": "طريقه عمل كلير كراش (PDF)",
+    "src": "/assets/docs/troubleshooting.pdf"
+  },
+  {
+    "type": "pdf",
+    "title": "دليل المستخدم (PDF)",
+    "src": "/assets/docs/user-guide.pdf"
+  }
+]

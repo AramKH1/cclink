@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CC-LINK Enterprise Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #b30000;
+            --secondary: #ff4d4d;
+            --accent: #8b0000;
+            --light-bg: #fff5f5;
+            --text-dark: #2d2d2d;
+            --text-light: #ffffff;
+            --border: #e6e6e6;
+            --shadow: 0 10px 30px rgba(0,0,0,0.12);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Montserrat',sans-serif;background:linear-gradient(135deg,#f8f9fa 0%,#fff 100%);color:var(--text-dark);line-height:1.6;min-height:100vh;padding:2rem}
+        .container{max-width:1400px;margin:0 auto}
+
+        .header{background:linear-gradient(145deg,var(--secondary),var(--primary) 60%,var(--accent));padding:4rem 2rem;border-radius:20px;box-shadow:var(--shadow);position:relative;overflow:hidden;text-align:center;margin-bottom:3rem}
+        .header::before{content:'';position:absolute;inset:0;opacity:.1;z-index:0;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.05" d="M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,208C672,213,768,171,864,149.3C960,128,1056,128,1152,128C1248,128,1344,128,1392,128L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>')}
+        .header-content{position:relative;z-index:1}
+        .header h1{font-size:4.5rem;font-weight:700;color:var(--text-light);margin-bottom:1.5rem;letter-spacing:-1px;text-shadow:0 2px 4px rgba(0,0,0,.1)}
+        .datetime-display{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);padding:1.2rem 2rem;border-radius:15px;display:inline-flex;align-items:center;gap:1rem;color:var(--text-light);font-size:1.4rem;font-weight:500;box-shadow:0 8px 25px rgba(0,0,0,.15);transition:var(--transition);margin-top:1rem;position:relative;overflow:hidden}
+        .datetime-display::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);animation:shine 3s infinite}
+        @keyframes shine{0%{transform:translateX(-100%)}20%,100%{transform:translateX(100%)}}
+
+        .main-content{background:#fff;border-radius:20px;padding:3rem;box-shadow:var(--shadow);margin-bottom:3rem;position:relative;overflow:hidden}
+        .main-content::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--primary),var(--secondary))}
+        .section-title{text-align:center;color:var(--primary);font-size:2.5rem;margin-bottom:3rem;position:relative;padding-bottom:1.5rem}
+        .section-title::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:80px;height:4px;background:var(--secondary);border-radius:2px}
+
+        .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2.5rem;margin:0 auto}
+        .card{background:#fff;border-radius:15px;padding:2rem;box-shadow:0 8px 20px rgba(0,0,0,.06);transition:var(--transition);position:relative;overflow:hidden;height:100%;display:flex;align-items:center;justify-content:center}
+        .card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--secondary),var(--primary));opacity:0;transition:var(--transition);z-index:0}
+        .card:hover{transform:translateY(-5px);box-shadow:0 15px 30px rgba(179,0,0,.15)}
+        .card:hover::before{opacity:1}
+        .card a,.card button{text-decoration:none;color:var(--primary);font-weight:600;font-size:1.2rem;position:relative;z-index:1;transition:var(--transition);display:flex;align-items:center;justify-content:center;padding:1.5rem;width:100%;height:100%;background:transparent;border:none;cursor:pointer}
+        .card:hover a,.card:hover button{color:#fff}
+        .card a::after,.card button::after{content:'→';margin-left:.5rem;opacity:0;transform:translateX(-10px);transition:var(--transition)}
+        .card:hover a::after,.card:hover button::after{opacity:1;transform:translateX(0)}
+
+        .footer{background:var(--primary);color:var(--text-light);padding:2rem;border-radius:15px;text-align:center;position:relative;overflow:hidden}
+        .footer::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--secondary),var(--primary))}
+        .footer p{margin:.8rem 0;font-size:.95rem;opacity:.9}
+        .footer a{color:rgba(255,255,255,.8);text-decoration:none;transition:var(--transition);font-weight:500}
+        .footer a:hover{color:#fff;text-decoration:underline}
+
+        @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .fade-in{animation:fadeIn .8s ease-out forwards}
+        @media(max-width:1024px){.card-grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}}
+        @media(max-width:768px){body{padding:1rem}.header h1{font-size:3rem}.main-content{padding:1.5rem}}
+        ::-webkit-scrollbar{width:10px}
+        ::-webkit-scrollbar-track{background:#f1f1f1}
+        ::-webkit-scrollbar-thumb{background:var(--primary);border-radius:5px}
+        ::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+
+        /* Modal */
+        .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:1000}
+        .modal{width:min(1000px,92vw);max-height:88vh;background:#fff;border-radius:16px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+        .modal-header{background:linear-gradient(145deg,var(--secondary),var(--primary));color:#fff;padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between}
+        .modal-title{font-weight:700;letter-spacing:.3px;display:flex;align-items:center;gap:.5rem}
+        .close-btn{border:none;background:rgba(255,255,255,.15);color:#fff;font-size:1.2rem;width:36px;height:36px;border-radius:8px;cursor:pointer;transition:var(--transition)}
+        .close-btn:hover{background:rgba(255,255,255,.3)}
+        .modal-body{padding:1rem;display:grid;grid-template-columns:340px 1fr;gap:1rem}
+        .list{background:#fafafa;border:1px solid var(--border);border-radius:12px;padding:1rem;overflow:auto}
+        .item{display:flex;align-items:center;justify-content:space-between;gap:.75rem;background:#fff;border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;margin-bottom:.6rem}
+        .item .meta{display:flex;flex-direction:column}
+        .item .title{font-weight:600}
+        .item .type{font-size:.85rem;color:#666}
+        .item .actions{display:flex;gap:.5rem}
+        .btn-sm{padding:.45rem .75rem;border-radius:8px;border:1px solid var(--primary);background:#fff;color:var(--primary);font-weight:600;cursor:pointer;transition:var(--transition)}
+        .btn-sm:hover{background:var(--light-bg)}
+        .btn-download{border-color:#0a7; color:#0a7}
+        .btn-download:hover{background:#e9fff6}
+        .preview{background:#000;border-radius:12px;overflow:hidden;border:1px solid #000;display:flex;align-items:center;justify-content:center;min-height:420px;position:relative}
+        .preview video,.preview iframe,.preview embed{width:100%;height:80vh;max-height:70vh;border:none;background:#000}
+        .preview .placeholder{color:#ddd;text-align:center;padding:2rem}
+        @media (max-width:900px){.modal-body{grid-template-columns:1fr}.preview{min-height:300px}.preview video,.preview iframe,.preview embed{height:60vh}}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header fade-in">
+            <div class="header-content">
+                <h1>CC-LINK</h1>
+                <div class="datetime-display" id="datetime">
+                    <span id="time"></span>
+                    <span id="date"></span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content fade-in" style="animation-delay: 0.2s">
+            <h2 class="section-title">Asiacell</h2>
+            <div class="card-grid">
+                <div class="card"><a href="https://crm.asiacell.com/login?ReturnUrl=%2f" target="_blank">CRM</a></div>
+                <div class="card"><a href="https://smartcare.asiacell.com/" target="_blank">Smart Care</a></div>
+                <div class="card"><a href="https://erpprod.asiacell.com/OA_HTML/AppsLocalLogin.jsp?requestUrl=" target="_blank">ERP</a></div>
+                <div class="card"><a href="https://vpfin-a01acsfrv.asiacell.com:8445/desktop/" target="_blank">Finesse Suly</a></div>
+                <div class="card"><a href="https://vpfin-b01acsmbv.asiacell.com:8445/desktop/" target="_blank">Finesse BAG</a></div>
+                <div class="card"><a href="https://hpsm.asiacell.com/smprod/index.do?telephonyuser=1" target="_blank">HPSM</a></div>
+                <div class="card"><a href="https://bss.asiacell.com:8643/oc/bes/sm/portal/home.html?timestamp=1744624688980" target="_blank">BSS</a></div>
+                <div class="card"><a href="https://mywfo.asiacell.com/wfo/control/signin" target="_blank">Verint</a></div>
+                <div class="card"><a href="https://lms.asiacell.com/" target="_blank">LMS</a></div>
+                <div class="card"><button id="openTroubleshooting">🛠 Troubleshooting</button></div>
+            </div>
+        </main>
+
+        <footer class="footer fade-in" style="animation-delay: 0.4s">
+            <p>© 2025 - Designed by <strong>Aram Khalid - CC Technical Support</strong>.</p>
+        </footer>
+    </div>
+
+    <!-- Modal (unchanged design) -->
+    <div class="modal-backdrop" id="trModalBackdrop" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="trTitle">
+            <div class="modal-header">
+                <div class="modal-title" id="trTitle">🛠 Troubleshooting</div>
+                <button class="close-btn" id="closeTrModal" title="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="list" id="itemsList"></div>
+                <div class="preview" id="previewArea">
+                    <div class="placeholder">اختر مقطع فيديو أو ملف PDF من القائمة لعرضه هنا.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === Date/Time (unchanged)
+        function updateDateTime(){
+            const now=new Date();
+            document.getElementById('time').textContent=now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
+            document.getElementById('date').textContent=now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+        }
+        setInterval(updateDateTime,1000); updateDateTime();
+
+        // === Animations (unchanged)
+        const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('fade-in');observer.unobserve(e.target)}})},{threshold:.1});
+        document.querySelectorAll('.card').forEach(card=>observer.observe(card));
+        document.querySelectorAll('.card a,.card button').forEach(link=>{
+            link.addEventListener('click',function(e){
+                const rect=this.getBoundingClientRect(); let x=e.clientX-rect.left; let y=e.clientY-rect.top;
+                let r=document.createElement('span'); r.style.left=`${x}px`; r.style.top=`${y}px`; r.classList.add('ripple'); this.appendChild(r);
+                setTimeout(()=>r.remove(),600);
+            });
+        });
+        const style=document.createElement('style');
+        style.textContent=`.card a,.card button{position:relative;overflow:hidden}.ripple{position:absolute;background:rgba(255,255,255,.3);border-radius:50%;transform:scale(0);animation:ripple .6s linear;pointer-events:none;width:20px;height:20px}@keyframes ripple{to{transform:scale(4);opacity:0}}`;
+        document.head.appendChild(style);
+
+        // === Modal open/close (unchanged)
+        const openBtn=document.getElementById('openTroubleshooting');
+        const backdrop=document.getElementById('trModalBackdrop');
+        const closeBtn=document.getElementById('closeTrModal');
+        const listEl=document.getElementById('itemsList');
+        const preview=document.getElementById('previewArea');
+
+        function openModal(){backdrop.style.display='flex';backdrop.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
+        function closeModal(){
+            backdrop.style.display='none';backdrop.setAttribute('aria-hidden','true');document.body.style.overflow='';
+            const v=preview.querySelector('video'); if(v){v.pause()}
+        }
+        openBtn.addEventListener('click',openModal);
+        closeBtn.addEventListener('click',closeModal);
+        backdrop.addEventListener('click',(e)=>{if(e.target===backdrop)closeModal()});
+        document.addEventListener('keydown',(e)=>{if(e.key==='Escape')closeModal()});
+
+        // === NEW: Load list from JSON (no design changes)
+        let TROUBLE_ITEMS = [];
+        async function loadTroubles(){
+            try{
+                const res = await fetch('/assets/data/troubleshooting.json?ts=' + Date.now());
+                const data = await res.json();
+                // Sort: videos first, then PDFs, keep titles alpha
+                TROUBLE_ITEMS = data.slice().sort((a,b)=>{
+                    const typeOrder = (a.type==='video'?0:1) - (b.type==='video'?0:1);
+                    if(typeOrder!==0) return typeOrder;
+                    return (a.title||'').localeCompare(b.title||'');
+                });
+                renderList();
+            }catch(e){
+                listEl.innerHTML = '<div style="padding:1rem;color:#b30000">تعذر تحميل القائمة. تأكد من وجود ملف assets/data/troubleshooting.json</div>';
+            }
+        }
+
+        function clearPreview(){preview.innerHTML=''}
+        function showItem(item){
+            clearPreview();
+            if(item.type==='video'){
+                const v=document.createElement('video');
+                v.src=item.src; v.controls=true; v.playsInline=true; v.style.background='#000';
+                preview.appendChild(v);
+                v.play().catch(()=>{});
+            }else if(item.type==='pdf'){
+                const f=document.createElement('iframe');
+                f.src=item.src; f.title=item.title; preview.appendChild(f);
+            }else{
+                const d=document.createElement('div'); d.className='placeholder'; d.textContent='نوع غير مدعوم.';
+                preview.appendChild(d);
+            }
+        }
+
+        function renderList(){
+            listEl.innerHTML='';
+            TROUBLE_ITEMS.forEach((item)=>{
+                const row=document.createElement('div'); row.className='item';
+                const meta=document.createElement('div'); meta.className='meta';
+                const t=document.createElement('div'); t.className='title'; t.textContent=item.title;
+                const ty=document.createElement('div'); ty.className='type'; ty.textContent=item.type.toUpperCase();
+                meta.appendChild(t); meta.appendChild(ty);
+
+                const actions=document.createElement('div'); actions.className='actions';
+                const viewBtn=document.createElement('button'); viewBtn.className='btn-sm'; viewBtn.textContent='عرض';
+                viewBtn.addEventListener('click',()=>showItem(item));
+
+                const dl=document.createElement('a'); dl.className='btn-sm btn-download'; dl.textContent='تنزيل';
+                dl.href=item.src; dl.download=''; dl.setAttribute('target','_blank');
+
+                actions.appendChild(viewBtn); actions.appendChild(dl);
+                row.appendChild(meta); row.appendChild(actions);
+                listEl.appendChild(row);
+            });
+        }
+
+        loadTroubles();
+    </script>
+</body>
+</html>
